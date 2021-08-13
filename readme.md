@@ -34,7 +34,7 @@ You have to install these dependencies before to run this script
   
   If you want to say thank you or/and support active development of this script:
   
-  You can add a [GitHub Star](#todo) Star to the project.
+  You can add a [GitHub Star](https://github.com/vincentBesseau/symfony-docker/stargazers) Star to the project.
 
 # Credits
 This script was created with phpstorm with open source licence.
