@@ -7,8 +7,8 @@ main_app() {
     echo ----- Default environment is dev -----
     env="dev"
   fi
-  loadEnv $env
   installSymfony
+  loadEnv $env
   loadDockerCompose
   applicationReady
 }

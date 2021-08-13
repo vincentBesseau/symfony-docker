@@ -17,6 +17,8 @@ WORKDIR /usr/src/app
 
 COPY --chown=1000:1000 App /usr/src/app
 
+COPY --chown=1000:1000 .env .env.dev /usr/src/app/
+
 RUN PATH=$PATH:/usr/src/app/vendor/bin:bin
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
