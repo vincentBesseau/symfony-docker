@@ -34,12 +34,12 @@ You have to install these dependencies before to run this script
   
   If you want to say thank you or/and support active development of this script:
   
-  You can add a [GitHub Star](#todo) Star to the project.
+  You can add a [GitHub Star](https://github.com/vincentBesseau/symfony-docker/stargazers) Star to the project.
 
 # Credits
 This script was created with phpstorm with open source licence.
-Thank you [jetBrain](https://www.jetbrains.com/?from=Gladys)
-![jetbrain](./Github-sources/jetbrain.png)
+Thank you [jetBrains](https://www.jetbrains.com/?from=Gladys)
+![jetbrains](./Github-sources/jetbrain.png)
 
 # licence
 
