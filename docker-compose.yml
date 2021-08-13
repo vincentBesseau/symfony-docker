@@ -38,7 +38,7 @@ services:
     volumes:
       - .env:/usr/src/app/.env
       - .env.${APP_ENV}:/usr/src/app/.env.${APP_ENV}
-      - ./App:/usr/src/ap
+      - ./App:/usr/src/app
     restart: on-failure
 
   node:
