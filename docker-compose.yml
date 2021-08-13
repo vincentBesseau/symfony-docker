@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb
+    container_name: mariadb_symfony_${PROJECT_NAME:-sample}
+    restart: always
+    ports:
+      - '${MARIADB_PORT:-3306}:3306'
+    environment:
+      # MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+
+  adminer:
+    image: adminer
+    container_name: adminer_symfony_${PROJECT_NAME:-sample}
+    restart: always
+    ports:
+        - '${ADMINER_PORT:-8080}:8080'
+
+  web:
+    image: nginx
+    container_name: nginx_symfony_${PROJECT_NAME:-sample}
+    restart: on-failure
+    volumes:
+      - ./App/public:/usr/src/app
+      - ./Docker-config/nginx/web_server_configuration.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./Docker-config/nginx/logs:/var/log/nginx
+    ports:
+          - '${NGINX_PORT:-80}:80'
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: Docker-config/php-fpm/Dockerfile
+    container_name: phpfpm_symfony_${PROJECT_NAME:-sample}
+    volumes:
+      - .env:/usr/src/app/.env
+      - .env.${APP_ENV}:/usr/src/app/.env.${APP_ENV}
+      - ./App:/usr/src/ap
+    restart: on-failure
+
+  node:
+    image: node:10-alpine
+    container_name: node_symfony_${PROJECT_NAME:-sample}
+    volumes:
+      - ./App/assets:/usr/src/app/assets
+      - ./App/public:/usr/src/app/public
+      - ./App/node_modules:/usr/src/app/node_modules
+      - ./App/webpack.config.js:/usr/src/app/webpack.config.js
+      - ./App/package.json:/usr/src/app/package.json
+      - ./App/package-lock.json:/usr/src/app/package-lock.json
+    ports:
+      - ${NODE_PORT:-8089}:8089
+      - 3000:3000
+    working_dir: /usr/src/app
+    command: "yarn run watch"
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev_symfony_${PROJECT_NAME:-sample}
+    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+    ports:
+      - "${MAILDEV_PORT:-8081}:80"
+    restart: always
