@@ -2,7 +2,7 @@ version: '3.8'
 services:
   db:
     image: mariadb
-    container_name: mariadb_symfony_${PROJECT_NAME:-sample}
+    container_name: mariadb_symfony_${PROJECT_NAME:-symfony-docker}
     restart: always
     ports:
       - '${MARIADB_PORT:-3306}:3306'
@@ -12,14 +12,14 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer_symfony_${PROJECT_NAME:-sample}
+    container_name: adminer_symfony_${PROJECT_NAME:-symfony-docker}
     restart: always
     ports:
         - '${ADMINER_PORT:-8080}:8080'
 
   web:
     image: nginx
-    container_name: nginx_symfony_${PROJECT_NAME:-sample}
+    container_name: nginx_symfony_${PROJECT_NAME:-symfony-docker}
     restart: on-failure
     volumes:
       - ./App/public:/usr/src/app
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: Docker-config/php-fpm/Dockerfile
-    container_name: phpfpm_symfony_${PROJECT_NAME:-sample}
+    container_name: phpfpm_symfony_${PROJECT_NAME:-symfony-docker}
     volumes:
       - .env:/usr/src/app/.env
       - .env.${APP_ENV}:/usr/src/app/.env.${APP_ENV}
@@ -43,7 +43,7 @@ services:
 
   node:
     image: node:10-alpine
-    container_name: node_symfony_${PROJECT_NAME:-sample}
+    container_name: node_symfony_${PROJECT_NAME:-symfony-docker}
     volumes:
       - ./App/assets:/usr/src/app/assets
       - ./App/public:/usr/src/app/public
@@ -59,7 +59,7 @@ services:
 
   maildev:
     image: maildev/maildev
-    container_name: maildev_symfony_${PROJECT_NAME:-sample}
+    container_name: maildev_symfony_${PROJECT_NAME:-symfony-docker}
     command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
     ports:
       - "${MAILDEV_PORT:-8081}:80"
