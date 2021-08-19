@@ -10,7 +10,7 @@ You have to install these dependencies before to run this script
 
 # images docker and usage
 
-<img src="/Users/Vince/PhpstormProjects/symfony-docker/Github-sources/docker-images.png" width="400"/>
+<img src="./Github-sources/docker-images.png" width="400"/>
 
 _This image is an example_
 
@@ -44,7 +44,7 @@ _This image is an example_
 
 5. Run the script `sh install.sh` and enjoy 🎉!
 
-<img alt="Install symfony on docker" src="/Users/Vince/PhpstormProjects/symfony-docker/Github-sources/command-line.gif" title="sh install.sh" width="500"/>
+<img alt="Install symfony on docker" src="./Github-sources/command-line.gif" title="sh install.sh" width="500"/>
 
 ![enjoy](./Github-sources/enjoy.gif)
 
