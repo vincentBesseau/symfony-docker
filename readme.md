@@ -1,12 +1,28 @@
 ![image docker](./Github-sources/docker-symfony.png)
 # Symfony on Docker
-> This repository is designed for developers who want to set up a symfony 5, php 8 environment under docker very quickly
+> This repository is designed for developers who want to set up a symfony 5 (with webpack encore), php 8 environment under docker very quickly
 
 # Dependencies
 You have to install these dependencies before to run this script
 - [Docker](https://docs.docker.com/get-docker/) 🐳
 - [Composer](https://getcomposer.org/download/)
 - [Symfony](https://symfony.com/download)
+
+# images docker and usage
+
+<img src="/Users/Vince/PhpstormProjects/symfony-docker/Github-sources/docker-images.png" width="400"/>
+
+_This image is an example_
+
+|    image                                   | usage                                                                            |
+|--------------------------------------------|----------------------------------------------------------------------------------|
+|    nginx                                   |     Web server                                                                   |
+|   php:8.0-fpm                              |   PHP server and proxy                                                           |
+|   adminer                                  |   Database management tool written in PHP                                        |
+|   maildev/maildev                          |   Mail test web interface                                                        |
+|   mariadb                                  |  Database server                                                                |
+|   thecodingmachine/php:8.0-v4-cli-node14   |  PHP server and node cli. This server is used for the update of dependencies.    |
+|   node:14-alpine                           | Server node for webpack                                                          |
 
 # ⚡️ Usage
 
@@ -27,6 +43,8 @@ You have to install these dependencies before to run this script
     | maildev | MAILDEV_PORT | 8081         |
 
 5. Run the script `sh install.sh` and enjoy 🎉!
+
+<img alt="Install symfony on docker" src="/Users/Vince/PhpstormProjects/symfony-docker/Github-sources/command-line.gif" title="sh install.sh" width="500"/>
 
 ![enjoy](./Github-sources/enjoy.gif)
 
