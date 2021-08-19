@@ -29,6 +29,19 @@ services:
           - '${NGINX_PORT:-80}:80'
     depends_on:
       - php-fpm
+      - php-node-cli
+
+  php-node-cli:
+    build:
+      context: .
+      dockerfile: Docker-config/php-node-cli/Dockerfile
+    container_name: phpnodecli_symfony_${PROJECT_NAME:-symfony-docker}
+    tty: true
+    stdin_open: true
+    volumes:
+    - ./App:/usr/src/app
+    - .env:/usr/src/app/.env
+    - .env.${APP_ENV}:/usr/src/app/.env.${APP_ENV}
 
   php-fpm:
     build:
@@ -42,20 +55,17 @@ services:
     restart: on-failure
 
   node:
-    image: node:10-alpine
+    image: node:14-alpine
     container_name: node_symfony_${PROJECT_NAME:-symfony-docker}
     volumes:
-      - ./App/assets:/usr/src/app/assets
-      - ./App/public:/usr/src/app/public
-      - ./App/node_modules:/usr/src/app/node_modules
-      - ./App/webpack.config.js:/usr/src/app/webpack.config.js
-      - ./App/package.json:/usr/src/app/package.json
-      - ./App/package-lock.json:/usr/src/app/package-lock.json
-    ports:
-      - ${NODE_PORT:-8089}:8089
-      - 3000:3000
+      - .env:/usr/src/app/.env
+      - .env.${APP_ENV}:/usr/src/app/.env.${APP_ENV}
+      - ./App:/usr/src/app
     working_dir: /usr/src/app
-    command: "yarn run watch"
+    command: yarn --verbose run watch
+    restart: on-failure
+    depends_on:
+      - php-node-cli
 
   maildev:
     image: maildev/maildev

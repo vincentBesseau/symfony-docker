@@ -14,15 +14,3 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-enable apcu
 
 WORKDIR /usr/src/app
-
-COPY --chown=1000:1000 App /usr/src/app
-
-COPY --chown=1000:1000 .env .env.dev /usr/src/app/
-
-RUN PATH=$PATH:/usr/src/app/vendor/bin:bin
-
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-RUN composer update --no-scripts --prefer-dist --no-interaction
-
-RUN composer install --no-scripts --prefer-dist --no-interaction

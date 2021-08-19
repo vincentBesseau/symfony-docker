@@ -10,6 +10,7 @@ main_app() {
   installSymfony
   loadEnv $env
   loadDockerCompose
+  installDependance
   applicationReady
 }
 
@@ -33,7 +34,18 @@ installSymfony() {
     echo ----- Getting Symfony app -----
     symfony new --full App
   else
-    echo ----- Skipping Symfony download
+    echo ----- Skipping Symfony download -----
+  fi
+}
+
+installDependance() {
+  echo ----- Install dependancies with composer and yarn -----
+  if [ ! -d "App/node_modules" ]; then
+    docker exec phpnodecli_symfony_${PROJECT_NAME:-symfony-docker} composer update
+    docker exec phpnodecli_symfony_${PROJECT_NAME:-symfony-docker} composer require symfony/webpack-encore-bundle
+    docker exec phpnodecli_symfony_${PROJECT_NAME:-symfony-docker} yarn install
+  else
+    echo ----- Skipping dependancies already install -----
   fi
 }
 
@@ -48,7 +60,7 @@ applicationReady() {
   echo ----- Application: http://localhost:${NGINX_PORT:-80} -----
   echo ----- adminer: http://localhost:${ADMINER_PORT:-8080} -----
   echo ----- maildev: http://localhost:${MAILDEV_PORT:-8081} -----
-  echo ----- DB url: $DATABASE_URL -----
+  echo ----- DB url: mysql://root:$MYSQL_ROOT_PASSWORD@localhost:${MARIADB_PORT:-3306}/${DB_NAME}?serverVersion=mariadb-10.6.3 -----
 }
 
 main_app $1
